@@ -55,30 +55,30 @@ export default function HomePage() {
                 {/* Hero Content */}
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
                     <div className="max-w-3xl space-y-6">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm">
                             <Sparkles className="w-4 h-4" />
-                            <span>Real-time Tourism Intelligence</span>
+                            <span>Incredible India • अतुल्य भारत</span>
                         </div>
 
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-100 leading-tight">
-                            Discover India's{' '}
-                            <span className="gradient-text">Hidden Gems</span>{' '}
-                            Without the Crowds
+                            Explore the Soul of{' '}
+                            <span className="gradient-text">Bharat</span>{' '}
+                            <span className="text-slate-100">With Ease</span>
                         </h1>
 
                         <p className="text-lg text-slate-400 max-w-2xl">
-                            Get live crowd updates, best visiting times, and smart recommendations
-                            for tourist destinations across India. Plan smarter, travel better.
+                            From the snow-capped Himalayas to the serene backwaters of Kerala, 
+                            discover India's timeless heritage with real-time crowd insights.
                         </p>
 
                         <div className="flex flex-wrap gap-4 pt-4">
                             <Link to="/places">
                                 <Button 
                                     size="lg" 
-                                    className="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold gap-2"
+                                    className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold gap-2"
                                     data-testid="explore-places-btn"
                                 >
-                                    Explore Places
+                                    Explore Destinations
                                     <ArrowRight className="w-4 h-4" />
                                 </Button>
                             </Link>
@@ -90,7 +90,7 @@ export default function HomePage() {
                                     data-testid="view-heatmap-btn"
                                 >
                                     <MapPin className="w-4 h-4" />
-                                    View Live Heatmap
+                                    Live Crowd Map
                                 </Button>
                             </Link>
                         </div>
@@ -114,7 +114,7 @@ export default function HomePage() {
                                 <div className="text-sm text-slate-500 mt-1">Live Monitoring</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-cyan-400">100%</div>
+                                <div className="text-3xl font-bold text-orange-400">100%</div>
                                 <div className="text-sm text-slate-500 mt-1">Free Access</div>
                             </div>
                         </div>
