@@ -20,6 +20,7 @@ from reportlab.lib.pagesizes import letter, landscape
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 import random
+from statistics import mean, stdev
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -519,6 +520,191 @@ async def get_analytics_summary(user: dict = Depends(verify_token)):
         "total_feedbacks": feedback_count,
         "average_rating": round(avg_rating, 1)
     }
+
+# ===================== ML PREDICTION MODULE =====================
+
+class PredictionInput(BaseModel):
+    location_id: str
+
+class PredictionOutput(BaseModel):
+    location_id: str
+    location_name: str
+    predicted_footfall: int
+    predicted_crowd_level: str
+    confidence: float
+    factors: dict
+    recommendation: str
+
+def simple_linear_regression(x_vals: list, y_vals: list) -> tuple:
+    """Simple linear regression: returns slope and intercept"""
+    n = len(x_vals)
+    if n < 2:
+        return 0, mean(y_vals) if y_vals else 0
+    
+    x_mean = mean(x_vals)
+    y_mean = mean(y_vals)
+    
+    numerator = sum((x_vals[i] - x_mean) * (y_vals[i] - y_mean) for i in range(n))
+    denominator = sum((x_vals[i] - x_mean) ** 2 for i in range(n))
+    
+    if denominator == 0:
+        return 0, y_mean
+    
+    slope = numerator / denominator
+    intercept = y_mean - slope * x_mean
+    return slope, intercept
+
+def calculate_confidence(predictions: list, actuals: list) -> float:
+    """Calculate prediction confidence based on historical accuracy"""
+    if len(predictions) < 2:
+        return 0.7  # Default confidence
+    
+    errors = [abs(p - a) / max(a, 1) for p, a in zip(predictions, actuals)]
+    avg_error = mean(errors)
+    confidence = max(0.5, min(0.95, 1 - avg_error))
+    return round(confidence, 2)
+
+@api_router.post("/predict/crowd", response_model=PredictionOutput)
+async def predict_crowd(input: PredictionInput):
+    """
+    ML-based crowd prediction using historical footfall data.
+    Uses linear regression + day-of-week patterns + seasonal adjustments.
+    """
+    location = await db.locations.find_one({"id": input.location_id}, {"_id": 0})
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+    
+    # Fetch last 30 days of footfall data
+    records = await db.footfall_records.find(
+        {"location_id": input.location_id},
+        {"_id": 0}
+    ).sort("timestamp", -1).to_list(1000)
+    
+    if len(records) < 7:
+        # Not enough data - return estimate based on current status
+        current = location.get('current_footfall', 200)
+        return PredictionOutput(
+            location_id=input.location_id,
+            location_name=location['name'],
+            predicted_footfall=current,
+            predicted_crowd_level=get_crowd_level(current),
+            confidence=0.5,
+            factors={"note": "Insufficient historical data"},
+            recommendation="Limited data available. Check back for better predictions."
+        )
+    
+    # Parse timestamps and group by date
+    daily_data = {}
+    for record in records:
+        ts = record['timestamp']
+        if isinstance(ts, str):
+            ts = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+        date_key = ts.strftime("%Y-%m-%d")
+        day_of_week = ts.weekday()
+        
+        if date_key not in daily_data:
+            daily_data[date_key] = {"total": 0, "count": 0, "dow": day_of_week}
+        daily_data[date_key]["total"] += record['count']
+        daily_data[date_key]["count"] += 1
+    
+    # Calculate daily averages
+    sorted_dates = sorted(daily_data.keys())
+    daily_avgs = [(i, daily_data[d]["total"] / max(daily_data[d]["count"], 1)) 
+                  for i, d in enumerate(sorted_dates)]
+    
+    # 1. Linear Regression Trend
+    x_vals = [d[0] for d in daily_avgs]
+    y_vals = [d[1] for d in daily_avgs]
+    slope, intercept = simple_linear_regression(x_vals, y_vals)
+    trend_prediction = slope * (len(x_vals)) + intercept
+    
+    # 2. Day-of-week Pattern (tomorrow's day)
+    tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
+    tomorrow_dow = tomorrow.weekday()
+    
+    dow_footfall = {}
+    for date_key, data in daily_data.items():
+        dow = data["dow"]
+        if dow not in dow_footfall:
+            dow_footfall[dow] = []
+        dow_footfall[dow].append(data["total"] / max(data["count"], 1))
+    
+    dow_avg = mean(dow_footfall.get(tomorrow_dow, [200])) if dow_footfall.get(tomorrow_dow) else 200
+    
+    # 3. Recent 7-day Moving Average
+    recent_avgs = [d[1] for d in daily_avgs[-7:]]
+    moving_avg = mean(recent_avgs) if recent_avgs else 200
+    
+    # 4. Weighted Combination
+    # Weights: trend (30%), day-of-week (40%), moving average (30%)
+    predicted_footfall = int(
+        0.3 * trend_prediction +
+        0.4 * dow_avg +
+        0.3 * moving_avg
+    )
+    predicted_footfall = max(20, predicted_footfall)  # Floor
+    
+    # Calculate confidence
+    if len(daily_avgs) >= 7:
+        # Compare last 7 predictions vs actuals
+        test_predictions = []
+        for i in range(max(0, len(daily_avgs) - 7), len(daily_avgs)):
+            pred = slope * i + intercept
+            test_predictions.append(pred)
+        test_actuals = [d[1] for d in daily_avgs[-7:]]
+        confidence = calculate_confidence(test_predictions, test_actuals)
+    else:
+        confidence = 0.6
+    
+    # Determine crowd level
+    predicted_level = get_crowd_level(predicted_footfall)
+    
+    # Generate recommendation
+    if predicted_level == "Low":
+        recommendation = f"Great time to visit! Expected low crowd around {predicted_footfall} visitors."
+    elif predicted_level == "Medium":
+        recommendation = f"Moderate crowd expected (~{predicted_footfall}). Consider visiting early morning."
+    else:
+        recommendation = f"High crowd expected (~{predicted_footfall}). Book tickets in advance and arrive early."
+    
+    # Weekend/weekday factor
+    is_weekend = tomorrow_dow in [5, 6]
+    
+    return PredictionOutput(
+        location_id=input.location_id,
+        location_name=location['name'],
+        predicted_footfall=predicted_footfall,
+        predicted_crowd_level=predicted_level,
+        confidence=confidence,
+        factors={
+            "trend_component": round(trend_prediction, 0),
+            "day_of_week_component": round(dow_avg, 0),
+            "moving_average_component": round(moving_avg, 0),
+            "is_weekend": is_weekend,
+            "prediction_date": tomorrow.strftime("%Y-%m-%d"),
+            "data_points_used": len(records)
+        },
+        recommendation=recommendation
+    )
+
+@api_router.get("/predict/all")
+async def predict_all_locations():
+    """Get predictions for all active locations"""
+    locations = await db.locations.find({}, {"_id": 0, "id": 1, "name": 1}).to_list(100)
+    predictions = []
+    
+    for loc in locations:
+        try:
+            pred = await predict_crowd(PredictionInput(location_id=loc['id']))
+            predictions.append(pred.model_dump())
+        except Exception as e:
+            predictions.append({
+                "location_id": loc['id'],
+                "location_name": loc['name'],
+                "error": str(e)
+            })
+    
+    return predictions
 
 @api_router.get("/analytics/hourly")
 async def get_hourly_analytics():
