@@ -6,6 +6,7 @@ import { Textarea } from '../components/ui/textarea';
 import { CrowdBadge } from '../components/common/CrowdBadge';
 import { LeafletMap } from '../components/map/LeafletMap';
 import { locationAPI, feedbackAPI, analyticsAPI } from '../lib/api';
+import axios from 'axios';
 import { toast } from 'sonner';
 import {
     MapPin,
@@ -18,6 +19,8 @@ import {
     Send,
     Loader2,
     ChevronRight,
+    Brain,
+    TrendingUp,
 } from 'lucide-react';
 import {
     LineChart,
@@ -36,6 +39,7 @@ export default function PlaceDetailPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [prediction, setPrediction] = useState(null);
     const [feedback, setFeedback] = useState({
         user_name: '',
         user_email: '',
@@ -54,6 +58,11 @@ export default function PlaceDetailPage() {
                 setLocation(locRes.data);
                 setHourlyData(hourlyRes.data);
                 setFeedbacks(feedbackRes.data);
+                // Fetch ML prediction
+                try {
+                    const predRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/predict/crowd`, { location_id: id });
+                    setPrediction(predRes.data);
+                } catch (e) { console.log('Prediction unavailable'); }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
                 toast.error('Failed to load location details');
@@ -422,6 +431,30 @@ export default function PlaceDetailPage() {
                                 </p>
                             </div>
                         </div>
+
+                        {/* ML Prediction Card */}
+                        {prediction && (
+                            <div className="glass-card rounded-xl p-6" data-testid="prediction-card">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <Brain className="w-5 h-5 text-cyan-400" />
+                                    <h3 className="text-lg font-semibold text-slate-100">Tomorrow's Prediction</h3>
+                                </div>
+                                <div className="text-center mb-4">
+                                    <CrowdBadge level={prediction.predicted_crowd_level} size="lg" />
+                                    <div className="mt-3">
+                                        <span className="text-3xl font-bold text-slate-100">{prediction.predicted_footfall}</span>
+                                        <span className="text-slate-400 ml-2">expected</span>
+                                    </div>
+                                    <div className="flex items-center justify-center gap-1 mt-2 text-sm text-slate-500">
+                                        <TrendingUp className="w-4 h-4" />
+                                        <span>{Math.round(prediction.confidence * 100)}% confidence</span>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-cyan-400 text-center bg-cyan-500/10 rounded-lg p-3">
+                                    {prediction.recommendation}
+                                </p>
+                            </div>
+                        )}
 
                         {/* Back Button */}
                         <Link to="/places" className="block">
