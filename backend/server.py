@@ -384,7 +384,9 @@ async def create_location(input: LocationCreate, user: dict = Depends(verify_tok
     location = Location(**input.model_dump())
     doc = location.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
-    await db.locations.insert_one(doc)
+    result = await db.locations.insert_one(doc)
+    # Return the document without MongoDB's _id
+    doc.pop('_id', None)
     return doc
 
 @api_router.put("/locations/{location_id}")
