@@ -1,34 +1,159 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Tourism Intelligence App Styles */
+
+.App {
+    min-height: 100vh;
+    background-color: #0f172a;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+/* Card hover effects */
+.location-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+/* Stats card gradient borders */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #06b6d4, #3b82f6);
+}
+
+/* Navigation link styles */
+.nav-link {
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #06b6d4;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Mobile menu animation */
+.mobile-menu {
+    transform-origin: top;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
     }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Chart container styles */
+.chart-container {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(30, 41, 59, 0.4) 100%);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
 }
 
-.App-link {
-    color: #61dafb;
+/* Table styles */
+.data-table {
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-@keyframes App-logo-spin {
+.data-table th {
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table tr:hover td {
+    background: rgba(51, 65, 85, 0.3);
+}
+
+/* Form input focus styles */
+.form-input:focus {
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.3);
+}
+
+/* Badge animations */
+.crowd-badge {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.crowd-badge:hover {
+    transform: scale(1.05);
+}
+
+/* Loading spinner */
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
     from {
         transform: rotate(0deg);
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* Page transitions */
+.page-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .chart-container {
+        padding: 0.75rem;
+    }
+}
+
+/* Print styles for export */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
     }
 }
