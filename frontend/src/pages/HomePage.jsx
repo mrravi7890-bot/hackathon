@@ -135,7 +135,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Link to="/heatmap">
-                            <Button variant="ghost" className="text-cyan-400 hover:bg-cyan-500/10 gap-2">
+                            <Button variant="ghost" className="text-orange-400 hover:bg-orange-500/10 gap-2">
                                 Full Screen Map
                                 <ArrowRight className="w-4 h-4" />
                             </Button>
@@ -175,14 +175,14 @@ export default function HomePage() {
                     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
                         <div>
                             <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">
-                                Popular Destinations
+                                Sacred & Scenic <span className="text-orange-400">Destinations</span>
                             </h2>
                             <p className="text-slate-400 mt-2">
                                 Explore top-rated tourist attractions with live crowd status
                             </p>
                         </div>
                         <Link to="/places">
-                            <Button variant="ghost" className="text-cyan-400 hover:bg-cyan-500/10 gap-2">
+                            <Button variant="ghost" className="text-orange-400 hover:bg-orange-500/10 gap-2">
                                 View All Places
                                 <ArrowRight className="w-4 h-4" />
                             </Button>
@@ -218,9 +218,9 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-                            <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
-                                <TrendingUp className="w-6 h-6 text-cyan-400" />
+                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-orange-500/30 transition-colors">
+                            <div className="w-12 h-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                                <TrendingUp className="w-6 h-6 text-orange-400" />
                             </div>
                             <h3 className="text-lg font-semibold text-slate-100 mb-2">
                                 Real-time Analytics
@@ -230,9 +230,9 @@ export default function HomePage() {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-                            <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
-                                <Clock className="w-6 h-6 text-cyan-400" />
+                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-amber-500/30 transition-colors">
+                            <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4">
+                                <Clock className="w-6 h-6 text-amber-400" />
                             </div>
                             <h3 className="text-lg font-semibold text-slate-100 mb-2">
                                 Best Time Recommendations
@@ -242,9 +242,9 @@ export default function HomePage() {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-                            <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
-                                <Users className="w-6 h-6 text-cyan-400" />
+                        <div className="p-6 rounded-xl bg-card border border-slate-700/50 hover:border-green-500/30 transition-colors">
+                            <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4">
+                                <Users className="w-6 h-6 text-green-400" />
                             </div>
                             <h3 className="text-lg font-semibold text-slate-100 mb-2">
                                 Community Feedback
