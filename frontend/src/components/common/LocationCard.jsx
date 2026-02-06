@@ -31,7 +31,8 @@ export const LocationCard = ({ location, className }) => {
                 </div>
                 
                 {/* Category */}
-                <div className="px-3 py-1 rounded-md bg-slate-900/60 backdrop-blur-sm text-xs text-orange-400 border border-orange-500/20">
+                <div className="absolute bottom-3 left-3">
+                    <span className="px-2 py-1 rounded-md bg-slate-900/60 backdrop-blur-sm text-xs text-orange-400 border border-orange-500/20">
                         {location.category}
                     </span>
                 </div>
