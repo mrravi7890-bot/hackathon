@@ -552,14 +552,16 @@ async def get_hourly_analytics():
 @api_router.post("/feedback", response_model=dict)
 async def submit_feedback(input: FeedbackCreate):
     # Verify location exists
-    location = await db.locations.find_one({"id": input.location_id})
+    location = await db.locations.find_one({"id": input.location_id}, {"_id": 0})
     if not location:
         raise HTTPException(status_code=404, detail="Location not found")
     
     feedback = Feedback(**input.model_dump())
     doc = feedback.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
-    await db.feedbacks.insert_one(doc)
+    result = await db.feedbacks.insert_one(doc)
+    # Return the document without MongoDB's _id
+    doc.pop('_id', None)
     return doc
 
 @api_router.get("/feedback", response_model=List[dict])
