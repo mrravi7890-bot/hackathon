@@ -261,19 +261,19 @@ export default function HomePage() {
             <section className="py-16 border-t border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="relative rounded-2xl overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-amber-500/10 to-green-500/20" />
                         <div className="relative p-8 md:p-12 text-center">
                             <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">
-                                Ready to Explore?
+                                Begin Your Journey Through India
                             </h2>
                             <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-                                Start planning your next adventure with real-time crowd insights
-                                and smart recommendations.
+                                From ancient temples to modern marvels, experience the diversity of 
+                                Indian culture with smart travel insights.
                             </p>
                             <Link to="/places">
                                 <Button 
                                     size="lg"
-                                    className="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-semibold"
+                                    className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold"
                                     data-testid="cta-explore-btn"
                                 >
                                     Start Exploring
@@ -284,18 +284,19 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer className="py-8 border-t border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
-                            <MapPin className="w-5 h-5 text-cyan-400" />
+                            <div className="w-8 h-8 rounded bg-gradient-to-br from-orange-500 via-white to-green-600 flex items-center justify-center">
+                                <MapPin className="w-4 h-4 text-orange-900" />
+                            </div>
                             <span className="font-semibold text-slate-100">
-                                Visit<span className="text-cyan-400">Map</span>
+                                Bharat<span className="text-orange-400">Darshan</span>
                             </span>
                         </div>
                         <p className="text-sm text-slate-500">
-                            © 2024 VisitMap. Tourism Intelligence Platform.
+                            © 2024 BharatDarshan • Promoting Indian Tourism & Heritage
                         </p>
                     </div>
                 </div>
