@@ -31,8 +31,7 @@ export const LocationCard = ({ location, className }) => {
                 </div>
                 
                 {/* Category */}
-                <div className="absolute bottom-3 left-3">
-                    <span className="px-2 py-1 rounded-md bg-slate-900/60 backdrop-blur-sm text-xs text-cyan-400 border border-cyan-500/20">
+                <div className="px-3 py-1 rounded-md bg-slate-900/60 backdrop-blur-sm text-xs text-orange-400 border border-orange-500/20">
                         {location.category}
                     </span>
                 </div>
@@ -40,12 +39,12 @@ export const LocationCard = ({ location, className }) => {
             
             {/* Content */}
             <div className="p-4 space-y-3">
-                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors line-clamp-1">
+                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-orange-400 transition-colors line-clamp-1">
                     {location.name}
                 </h3>
                 
                 <div className="flex items-center gap-1.5 text-slate-400 text-sm">
-                    <MapPin className="w-4 h-4 text-cyan-500" />
+                    <MapPin className="w-4 h-4 text-orange-500" />
                     <span>{location.city}, {location.state}</span>
                 </div>
                 

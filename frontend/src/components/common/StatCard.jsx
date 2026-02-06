@@ -27,7 +27,7 @@ export const StatCard = ({ title, value, subtitle, icon: Icon, trend, className 
                     )}
                 </div>
                 {Icon && (
-                    <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400">
+                    <div className="p-3 rounded-lg bg-orange-500/10 text-orange-400">
                         <Icon className="w-6 h-6" />
                     </div>
                 )}
