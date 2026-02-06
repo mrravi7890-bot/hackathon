@@ -38,12 +38,15 @@ export const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center neon-glow transition-all group-hover:neon-glow-strong">
-                            <MapPin className="w-5 h-5 text-white" />
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 via-white to-green-600 flex items-center justify-center neon-glow transition-all group-hover:neon-glow-strong">
+                            <MapPin className="w-5 h-5 text-orange-900" />
                         </div>
-                        <span className="font-semibold text-lg hidden sm:block text-slate-100">
-                            Visit<span className="text-cyan-400">Map</span>
-                        </span>
+                        <div className="hidden sm:block">
+                            <span className="font-semibold text-lg text-slate-100">
+                                Bharat<span className="text-orange-400">Darshan</span>
+                            </span>
+                            <p className="text-[10px] text-amber-500/80 -mt-1">अतुल्य भारत</p>
+                        </div>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -54,7 +57,7 @@ export const Navbar = () => {
                                 to={link.path}
                                 className={`nav-link px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                                     isActive(link.path)
-                                        ? 'text-cyan-400 bg-cyan-500/10'
+                                        ? 'text-orange-400 bg-orange-500/10'
                                         : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                                 }`}
                                 data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
@@ -89,7 +92,7 @@ export const Navbar = () => {
                         {isAuthenticated() ? (
                             <div className="flex items-center gap-3">
                                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700">
-                                    <User className="w-4 h-4 text-cyan-400" />
+                                    <User className="w-4 h-4 text-orange-400" />
                                     <span className="text-sm text-slate-300">{user?.name}</span>
                                 </div>
                                 <Button
@@ -107,7 +110,7 @@ export const Navbar = () => {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10"
+                                    className="border-orange-500/50 text-orange-400 hover:bg-orange-500/10"
                                     data-testid="admin-login-btn"
                                 >
                                     Admin Login
