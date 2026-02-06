@@ -1,0 +1,128 @@
+{
+  "identity": {
+    "persona": "E1",
+    "role": "Creative Designer",
+    "mission": "Create a unique, high-contrast, dark-mode tourism analytics system that breaks the mold of generic dashboards.",
+    "principles": [
+      "Fusion over Imitation",
+      "Emotion First",
+      "Content is King",
+      "Zoom In",
+      "Negative Space",
+      "Contrast"
+    ]
+  },
+  "theme": {
+    "mode": "dark",
+    "background": "#0f172a",
+    "card_background": "#1e293b",
+    "primary_accent": "#06b6d4",
+    "secondary_accent": "#3b82f6",
+    "text_primary": "#f8fafc",
+    "text_secondary": "#94a3b8",
+    "success": "#10b981",
+    "warning": "#f59e0b",
+    "danger": "#ef4444",
+    "chart_colors": [
+      "#06b6d4",
+      "#3b82f6",
+      "#10b981",
+      "#f59e0b",
+      "#ef4444"
+    ]
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Outfit, sans-serif",
+      "weights": ["400", "700"],
+      "usage": "All section titles, hero text, and card headers."
+    },
+    "body": {
+      "font_family": "DM Sans, sans-serif",
+      "weights": ["400", "500"],
+      "usage": "Paragraphs, data tables, and UI controls."
+    },
+    "mono": {
+      "font_family": "JetBrains Mono, monospace",
+      "usage": "Code snippets, API keys, and specific data metrics."
+    }
+  },
+  "layout": {
+    "spacing_scale": [
+      "p-1", "p-2", "p-4", "p-6", "p-8", "p-12", "p-16", "p-20", "p-24", "p-32"
+    ],
+    "grid_system": {
+      "dashboard": "Bento Grid (Mode B: High Density)",
+      "marketing": "Tetris Grid (Mode A: Asymmetry)"
+    },
+    "container_padding": "px-4 md:px-8 lg:px-12",
+    "border_radius": "rounded-lg"
+  },
+  "components": {
+    "library": "shadcn/ui",
+    "customization": {
+      "buttons": "Pill-shaped or sharp edges, high contrast on hover.",
+      "cards": "Flat background (#1e293b), 1px border (#334155), no shadow by default, subtle shadow on hover.",
+      "inputs": "Dark background (#0f172a), light border (#334155), focus ring cyan.",
+      "charts": "Recharts with custom tooltips and responsive containers.",
+      "maps": "React Leaflet with custom dark tile layer (CartoDB Dark Matter)."
+    },
+    "required_components": [
+      "Button", "Card", "Input", "Select", "Table", "Dialog", "Sheet", "Tabs", "Avatar", "Badge", "Calendar", "Popover", "Command", "ScrollArea"
+    ]
+  },
+  "visual_enhancers": {
+    "glassmorphism": "Use sparingly for overlays and sticky headers: bg-slate-900/70 backdrop-blur-xl border-b border-white/10.",
+    "gradients": "Subtle gradients only for accents or text highlights. No full-screen gradients.",
+    "shadows": "Colored shadows for neon effect on active elements: shadow-[0_0_15px_rgba(6,182,212,0.3)].",
+    "icons": "Lucide React (default) or Phosphor Icons for a more technical look."
+  },
+  "images": {
+    "hero_bg": "https://images.unsplash.com/photo-1665849863716-b527b5e9ed62?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxUYWolMjBNYWhhbCUyMHN1bnNldHxlbnwwfHx8fDE3NzAzNjYzOTR8MA&ixlib=rb-4.1.0&q=85",
+    "locations": {
+      "taj_mahal": "https://images.unsplash.com/photo-1665849863716-b527b5e9ed62?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwxfHxUYWolMjBNYWhhbCUyMHN1bnNldHxlbnwwfHx8fDE3NzAzNjYzOTR8MA&ixlib=rb-4.1.0&q=85",
+      "varanasi": "https://images.unsplash.com/photo-1671512226229-e05294dd1970?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxWYXJhbmFzaSUyMGdoYXRzJTIwZXZlbmluZ3xlbnwwfHx8fDE3NzAzNjYzOTh8MA&ixlib=rb-4.1.0&q=85",
+      "kerala": "https://images.unsplash.com/photo-1705838617550-ae0573ebefc8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwyfHxLZXJhbGElMjBiYWNrd2F0ZXJzJTIwYm9hdHxlbnwwfHx8fDE3NzAzNjY0MDN8MA&ixlib=rb-4.1.0&q=85",
+      "goa": "https://images.unsplash.com/photo-1625505826977-66d796089d73?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxHb2ElMjBiZWFjaCUyMHBhbG0lMjB0cmVlc3xlbnwwfHx8fDE3NzAzNjY0MDV8MA&ixlib=rb-4.1.0&q=85",
+      "jaipur": "https://images.unsplash.com/photo-1706961121783-4ae6c933983a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwxfHxKYWlwdXIlMjBIYXdhJTIwTWFoYWx8ZW58MHx8fHwxNzcwMzY2NDEwfDA&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "instructions_to_main_agent": {
+    "general": "You are building a high-performance, dark-mode tourism analytics dashboard. Prioritize data visibility and smooth interactions.",
+    "frontend": {
+      "framework": "React",
+      "styling": "Tailwind CSS",
+      "state_management": "Context API or Zustand (if needed)",
+      "routing": "React Router",
+      "maps": "Use 'react-leaflet' with 'leaflet' CSS. Mock the map data points.",
+      "charts": "Use 'recharts' for all data visualization. Style them to match the dark theme."
+    },
+    "backend": {
+      "framework": "FastAPI (Python)",
+      "database": "MongoDB",
+      "auth": "JWT",
+      "endpoints": [
+        "/api/locations (GET, POST, PUT, DELETE)",
+        "/api/analytics/footfall (GET)",
+        "/api/analytics/heatmap (GET)",
+        "/api/feedback (POST)",
+        "/api/auth/login (POST)"
+      ]
+    },
+    "testing": {
+      "attributes": "Add data-testid to all interactive elements."
+    }
+  },
+  "universal_guidelines": [
+    "Do not use generic centered layouts.",
+    "Create depth through layered design elements.",
+    "Use glassmorphism effects with backdrop filters.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Subtle grain textures and noise overlays are encouraged.",
+    "Never use AI assistant Emoji characters.",
+    "Use 'sonner' for toasts.",
+    "Components MUST use named exports.",
+    "Pages MUST use default exports."
+  ]
+}
